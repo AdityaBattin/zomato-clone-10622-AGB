@@ -4,16 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-       "build": "babel index.js -d dist",
-        "start": "npm run build && node dist/index.js",
-        "dev": "nodemon --exec babel-node index.js"
-      },
+    "build": "babel index.js -d dist",
+    "start": "npm run build && node dist/index.js",
+    "dev": "nodemon --exec babel-node index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.0"
   },
   "devDependencies": {
