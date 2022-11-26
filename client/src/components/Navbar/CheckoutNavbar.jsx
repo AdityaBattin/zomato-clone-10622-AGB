@@ -35,6 +35,7 @@ const CheckoutNavbar = () => {
                 />
               </div>
               {user.fullName}
+              
             </div>
           </div>
         </div>
