@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { IoCloseSharp } from "react-icons/io5";
+import { IoMdArrowFropdown, IoCloseSharp } from "react-icons/io5";
 import { IoMdArrowDropup, IoMdArrowDropright } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-
-// redux
-import { useSelector } from "react-redux";
-
+import { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux'
 // components
 import FoodItem from "./FoodItem";
 
 const CartData = ({ toggle }) => {
-  const cart = useSelector((glocalState) => glocalState.cart.cart);
+  // const [cart, setCart] = useState([]);
+  const cart = useSelector((globalState) => globalState.cart.cart)
   const navigate = useNavigate();
   const continueToCheckout = () => navigate("/checkout/orders");
 
@@ -42,8 +41,8 @@ const CartData = ({ toggle }) => {
 const CartContainer = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const cart = useSelector((glocalState) => glocalState.cart.cart);
-
+  // const [cart, setCart] = useState([]);
+  const cart = useSelector((globalState) => globalState.cart.cart)
   const toggleCart = () => setIsOpen((prev) => !prev);
   const closeCart = () => setIsOpen(false);
 

@@ -1,6 +1,7 @@
 import express from "express";
-import { UserModel } from "../../database/allModels";
+import { UserModel } from "../../database/allModules";
 import passport from "passport";
+import { IdValidation } from '../../validation/common.validation'
 
 const Router = express.Router();
 
@@ -27,32 +28,28 @@ Router.get(
 
 /**
  * Route     /:_id
- * Des       Get user data (For the review system)
+ * Des       Get user data (For review system) by _id
  * Params    _id
  * Access    Public
  * Method    GET
  */
-Router.get("/:_id", async (req, res) => {
+Router.get('/:_id', async (req, res) => {
   try {
     const { _id } = req.params;
-
+    await IdValidation(req.params);
     const getUser = await UserModel.findById(_id);
-
-    if (!getUser) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
     const { fullName } = getUser;
+    if (!getUser) return res.status(404).json({ message: 'User not Found !' });
+    return res.status(200).json({ user: { fullName } });
 
-    return res.json({ user: { fullName } });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
 
 /**
- * Route     /:_id
- * Des       Update user data
+ * Route     /update/:_id
+ * Des       update user data by _id
  * Params    _id
  * Access    Private
  * Method    PUT
@@ -63,9 +60,8 @@ Router.put(
   async (req, res) => {
     try {
       const { _id } = req.params;
+      await IdValidation(req.params);
       const { userData } = req.body;
-
-      // Task: Validate User Data
 
       userData.password = undefined;
 
@@ -79,7 +75,7 @@ Router.put(
         }
       );
 
-      return res.json({ user: updateUserData });
+      return res.status(200).json({ user: { updateUserData } });
     } catch (error) {
       return res.status(500).json({ error: error.message });
     }

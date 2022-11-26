@@ -1,6 +1,6 @@
 import joi from "joi";
 
-export const ValidateSignup = (userData) => {
+export const SignupValidation = (userData) => {
   const Schema = joi.object({
     fullName: joi.string().required().min(5),
     email: joi.string().email().required(),
@@ -14,7 +14,7 @@ export const ValidateSignup = (userData) => {
   return Schema.validateAsync(userData);
 };
 
-export const ValidateSignin = (userData) => {
+export const SigninValidation = (userData) => {
   const Schema = joi.object({
     email: joi.string().email().required(),
     password: joi.string().required(),

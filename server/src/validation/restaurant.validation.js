@@ -1,6 +1,6 @@
 import joi from "joi";
 
-export const ValidateRestaurantCity = (restaurantObject) => {
+export const RestaurantCityValidation = (restaurantObject) => {
   const Schema = joi.object({
     city: joi().string().required(),
   });
@@ -8,7 +8,7 @@ export const ValidateRestaurantCity = (restaurantObject) => {
   return Schema.validateAsync(restaurantObject);
 };
 
-export const ValidateSearchString = (restaurantObject) => {
+export const SearchStringValidation = (restaurantObject) => {
   const Schema = joi.object({
     searchString: joi().string().required(),
   });

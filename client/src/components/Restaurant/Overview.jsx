@@ -1,40 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoMdArrowDropright } from "react-icons/io";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getImage } from '../../redux/reducers/image/image.action'
 
 // components
 import MenuCollection from "./MenuCollection";
 import MenuSimilarRestaurantCard from "./MenuSimilarRestaurantCard";
-import ReviewCard from "../Reviews/ReviewCard";
+ import ReviewCard from "../Reviews/ReviewCard";
 import MapView from "./MapView";
-
-// redux
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { getReview } from "../../redux/reducers/review/review.action";
-import { getImage } from "../../redux/reducers/image/image.action";
 
 const Overview = () => {
+
   const [restaurant, setRestaurant] = useState({ cuisine: [] });
   const [menuImages, setMenuImages] = useState([]);
   const [reviews, setReviews] = useState([]);
-
   const { id } = useParams;
+  // const restaurant = { cuisine: [], };
+  const reduxState = useSelector((globalState) => globalState.restaurant.selectedRestaurant.restaurants);
+  // console.log(reduxState);
   const dispatch = useDispatch();
-
-  const reduxState = useSelector(
-    (globalState) => globalState.restaurant.selectedRestaurant.restaurant
-  );
 
   useEffect(() => {
     if (reduxState) {
       setRestaurant(reduxState);
     }
+
   }, [reduxState]);
+
 
   useEffect(() => {
     if (reduxState) {
@@ -42,13 +41,17 @@ const Overview = () => {
         const images = [];
         data.payload.images.map(({ location }) => images.push(location));
         setMenuImages(images);
+        
       });
 
       dispatch(getReview(reduxState?._id)).then((data) => {
-        setReviews(data.payload.reviews);
+  
+       setReviews(data.payload.reviews);
       });
     }
+
   }, [reduxState]);
+
 
   const slideConfig = {
     slidesPerView: 1,
@@ -164,10 +167,10 @@ const Overview = () => {
 
           <div className="my-4 w-full md:hidden flex flex-col gap-4">
             <MapView
-              title="McDonald's"
-              phno="+193423542345"
-              mapLocation={getLatLong("28.64121406271755, 77.21955482132051")}
-              address="H-5/6, Plaza Building, Connaught Place, New Delhi"
+              title={restaurant?.name}
+              phno={restaurant?.contactNumber}
+              mapLocation={getLatLong(restaurant?.mapLocation)}
+              address={restaurant?.address}
             />
           </div>
         </div>
@@ -177,11 +180,11 @@ const Overview = () => {
         className="hidden md:flex md:w-4/12 sticky rounded-xl top-20 bg-white py-4 px-4 shadow-md flex-col gap-4"
       >
         <MapView
-          title="McDonald's"
-          phno="+193423542345"
-          mapLocation={getLatLong("28.64121406271755, 77.21955482132051")}
-          latAndLong={"28.64121406271755, 77.21955482132051"}
-          address="H-5/6, Plaza Building, Connaught Place, New Delhi"
+          title={restaurant?.name}
+          phno={restaurant?.contactNumber}
+          mapLocation={getLatLong(restaurant?.mapLocation)}
+          latAndLong={restaurant?.mapLocation}
+          address={restaurant?.address}
         />
       </aside>
     </div>
@@ -189,19 +192,3 @@ const Overview = () => {
 };
 
 export default Overview;
-
-// _id: "124ksjf435245jv34fg3",
-//     isPro: true,
-//     isOff: true,
-//     name: "Nathu's Sweets",
-//     restaurantReviewValue: "3.7",
-//     cuisine: [
-//       "Mithai",
-//       "South Indian",
-//       "Chinese",
-//       "Street Food",
-//       "Fast Food",
-//       "Desserts",
-//       "North Indian",
-//     ],
-//     averageCost: "450",

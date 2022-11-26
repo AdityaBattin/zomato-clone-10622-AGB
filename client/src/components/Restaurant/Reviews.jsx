@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 //components
 import ReviewCard from "../Reviews/ReviewCard";
 import AddReviewCard from "../Reviews/AddReviewCard";
 import { useParams } from "react-router-dom";
-
-// redux
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { getReview } from "../../redux/reducers/review/review.action";
 
 const Reviews = () => {
@@ -15,21 +14,20 @@ const Reviews = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const updatedReviews = useSelector(
-    (globalState) => globalState.review.reviews.reviews
-  );
+  const updatedreviews = useSelector((globalState) => globalState.review.reviews.reviews)
 
   useEffect(() => {
     dispatch(getReview(id)).then((data) => {
+      
       setReviews(data.payload.reviews);
-    });
+    })
   }, []);
 
   useEffect(() => {
-    if (updatedReviews) {
-      setReviews(updatedReviews);
+    if (updatedreviews) {
+      setReviews(updatedreviews);
     }
-  }, [updatedReviews]);
+  }, [updatedreviews])
 
   return (
     <div className="w-full h-full flex-col md:flex md:flex-row relative gap-5">

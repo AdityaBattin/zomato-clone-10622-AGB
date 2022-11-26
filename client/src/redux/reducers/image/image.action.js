@@ -5,12 +5,12 @@ import { GET_IMAGE } from "./image.type";
 
 export const getImage = (_id) => async (dispatch) => {
   try {
-    const image = await axios({
+    const Image = await axios({
       method: "GET",
-      url: `${process.env.REACT_APP_CLIENT_URL}image/${_id}`,
+      url: `http://localhost:4000/image/${_id}`,
     });
 
-    return dispatch({ type: GET_IMAGE, payload: image.data.image });
+    return dispatch({ type: GET_IMAGE, payload: Image.data.image });
   } catch (error) {
     return dispatch({ type: "ERROR", payload: error });
   }

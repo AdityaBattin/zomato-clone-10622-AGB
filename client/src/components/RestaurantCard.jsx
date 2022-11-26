@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AiTwotoneStar } from "react-icons/ai";
 
-// redux
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux'
 import { getImage } from "../redux/reducers/image/image.action";
 
 const RestaurantCard = (props) => {
@@ -14,16 +13,17 @@ const RestaurantCard = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // console.log(props.photos);
     dispatch(getImage(props.photos)).then((data) => {
       const images = data.payload.images;
       setImage((prev) => ({ ...prev, images }));
-    });
+    })
   }, [props.photos]);
 
   return (
     <Link
       to={`/restaurant/${props._id}/overview`}
-      // className="w-full md:w-1/2 lg:w-1/3"
+    // className="w-full md:w-1/2 lg:w-1/3"
     >
       <div className="bg-white p-4 w-full rounded-2xl transition duration-700 ease-in-out  sm:shadow-md md:shadow-none hover:drop-shadow-lg">
         <div className="w-full relative">

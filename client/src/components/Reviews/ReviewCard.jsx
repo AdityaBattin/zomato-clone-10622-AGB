@@ -6,7 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 const ReviewCard = (props) => {
-  const [user, setUser] = useState("Aditya");
+  const [user, setUser] = useState("Maheshwari");
 
   return (
     <div className="my-3 flex flex-col gap-3 pb-4 border-b border-gray-300">
@@ -14,7 +14,7 @@ const ReviewCard = (props) => {
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-full">
             <img
-              src="/images/avatar.png"
+              src="https://cdn3.vectorstock.com/i/1000x1000/00/92/teen-boy-character-avatar-vector-11360092.jpg"
               alt="avatar"
               className="w-full h-full rounded-full object-cover"
             />

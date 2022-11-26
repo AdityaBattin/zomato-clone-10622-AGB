@@ -2,10 +2,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
-// redux
-import { useDispatch } from "react-redux";
-import { signUp } from "../../redux/reducers/auth/auth.action";
-import { getMySelf } from "../../redux/reducers/user/user.action";
+import { useDispatch } from 'react-redux'
+import { signup } from "../../redux/reducers/auth/auth.action";
+import { selfuser } from "../../redux/reducers/user/user.action";
 
 const Signup = ({ isOpen, setIsOpen }) => {
   const [userData, setUserData] = useState({
@@ -25,14 +24,14 @@ const Signup = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
 
   const submit = async () => {
-    await dispatch(signUp(userData));
-    await dispatch(getMySelf());
+    await dispatch(signup(userData));
+    await dispatch(selfuser());
     closeModal();
     setUserData({ email: "", password: "", fullName: "" });
   };
 
   const googleSignUp = () =>
-    (window.location.href = `${process.env.REACT_APP_CLIENT_URL}auth/google`);
+    (window.location.href = "http://localhost:4000/auth/google");
 
   return (
     <>
@@ -113,7 +112,7 @@ const Signup = ({ isOpen, setIsOpen }) => {
                         className="w-full text-center bg-zomato-400 text-white px-2 rounded-lg py-2 cursor-pointer"
                         onClick={submit}
                       >
-                        Sign In
+                        Sign Up
                       </div>
                     </form>
                   </div>

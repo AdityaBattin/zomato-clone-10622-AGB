@@ -1,6 +1,7 @@
 import "./App.css";
-import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 // pages
 import Checkout from "./pages/Checkout.page";
@@ -16,16 +17,15 @@ import Reviews from "./components/Restaurant/Reviews";
 import Photos from "./components/Restaurant/Photos";
 import RestaurantLayout from "./layouts/Restaurant.layout";
 
-// redux
-import { useDispatch } from "react-redux";
-import { getMySelf } from "./redux/reducers/user/user.action";
+import { selfuser } from './redux/reducers/user/user.action'
 import { getCart } from "./redux/reducers/cart/cart.action";
 
 function App() {
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getMySelf());
+    dispatch(selfuser());
     dispatch(getCart());
   }, [localStorage]);
 

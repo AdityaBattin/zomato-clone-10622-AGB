@@ -1,5 +1,8 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
+// import dotenv from 'dotenv'
+
+// dotenv.config();
 
 export default async () => {
-  return mongoose.connect(process.env.MONGO_URL);
-};
+    return mongoose.connect(process.env.MONGO_URL);
+}

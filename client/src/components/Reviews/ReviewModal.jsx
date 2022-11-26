@@ -3,11 +3,11 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useParams } from "react-router-dom";
 import Rating from "react-rating-stars-component";
 
-// redux
 import { useDispatch } from "react-redux";
 import { postReview } from "../../redux/reducers/review/review.action";
 
 const ReviewModal = ({ isOpen, setIsOpen, type }) => {
+
   const [reviewData, setReviewData] = useState({
     subject: "",
     reviewText: "",
@@ -16,6 +16,7 @@ const ReviewModal = ({ isOpen, setIsOpen, type }) => {
     rating: 0,
   });
 
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const ReviewModal = ({ isOpen, setIsOpen, type }) => {
       }));
   }, [type]);
 
-  const { id } = useParams();
+
 
   const handleChange = (event) => {
     setReviewData((prev) => ({

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { HiLocationMarker } from "react-icons/hi";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { RiSearch2Line } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
 
 // components
 import SignUp from "../Auth/Signup";
 import SignIn from "../Auth/Signin";
 
-// redux
-import { useSelector, useDispatch } from "react-redux";
-import { signOut } from "../../redux/reducers/auth/auth.action";
-import { clearUser } from "../../redux/reducers/user/user.action";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { signout } from "../../redux/reducers/auth/auth.action";
+import { clearuser } from "../../redux/reducers/user/user.action";
 
 const MobileNav = ({
   user,
@@ -35,16 +35,16 @@ const MobileNav = ({
   const navigate = useNavigate();
 
   const SignOut = () => {
-    dispatch(signOut());
-    dispatch(clearUser());
-    navigate("/delivery");
+    dispatch(signout());
+    dispatch(clearuser());
+    navigate('/delivery');
     setIsDropdownOpen(false);
-  };
+  }
 
   return (
     <div className="flex w-full items-center justify-between lg:hidden">
       <div className="w-28">
-        <Link to="/">
+        <Link to='/'>
           <img
             src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png"
             alt="logo"
@@ -63,7 +63,7 @@ const MobileNav = ({
               className="border border-gray-300 text-zomato-400 w-9 h-9 rounded-full"
             >
               <img
-                src="/images/avatar.png"
+                src="https://cdn3.vectorstock.com/i/1000x1000/00/92/teen-boy-character-avatar-vector-11360092.jpg"
                 alt="avatar"
                 className="w-full h-full rounded-full object-cover"
               />
@@ -117,17 +117,17 @@ const LargeNav = ({
   const navigate = useNavigate();
 
   const SignOut = () => {
-    dispatch(signOut());
-    dispatch(clearUser());
-    navigate("/delivery");
+    dispatch(signout());
+    dispatch(clearuser());
+    navigate('/delivery');
     setIsDropdownOpen(false);
-  };
+  }
 
   return (
     <div className="w-full items-center justify-between hidden lg:flex px-14">
       <div className="gap-4  items-center justify-around flex">
         <div className="w-20">
-          <Link to="/">
+          <Link to='/'>
             <img
               src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png"
               alt="logo"
@@ -143,7 +143,7 @@ const LargeNav = ({
           </span>
           <input
             type="text"
-            placeholder="Delhi NCR"
+            placeholder="Maharashra"
             className="w-full focus:outline-none"
           />
           <IoMdArrowDropdown />
@@ -166,7 +166,7 @@ const LargeNav = ({
               className="border border-gray-300 text-zomato-400 w-9 h-9 rounded-full"
             >
               <img
-                src="/images/avatar.png"
+                src="https://cdn3.vectorstock.com/i/1000x1000/00/92/teen-boy-character-avatar-vector-11360092.jpg"
                 alt="avatar"
                 className="w-full h-full rounded-full object-cover"
               />
@@ -209,7 +209,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // const user = {
-  //   // fullName: "Aditya",
+  //   // fullName: "Maheshwari",
   // };
 
   const user = useSelector((globalState) => globalState.user);

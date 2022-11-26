@@ -1,37 +1,36 @@
 import mongoose from "mongoose";
 
-const RestaurantSchema = new mongoose.Schema(
-  {
+const RestaurantSchema = new mongoose.Schema({
     name: { type: String, required: true },
     city: { type: String, required: true },
     address: { type: String, required: true },
-    mapLocation: { type: String, required: true },
+    maplocation: { type: String, required: true },
     cuisine: [String],
-    restaurantTimings: String,
+    resturentTimings: String,
     contactNumber: Number,
-    website: String,
+    website: Number,
     popularDishes: [String],
-    averageCost: Number,
-    amenties: [String],
+    avrageCost: Number,
+    amenties: [String],     //amenties = facilities
     menuImages: {
-      type: mongoose.Types.ObjectId,
-      ref: "images",
+        type: mongoose.Types.ObjectId,
+        ref: "images",
     },
     menu: {
-      type: mongoose.Types.ObjectId,
-      ref: "menus",
+        type: mongoose.Types.ObjectId,
+        ref: "menus",
     },
-    reviews: [
-      {
+    reviews: [{
         type: mongoose.Types.ObjectId,
         ref: "reviews",
-      },
-    ],
+    }],
     photos: { type: mongoose.Types.ObjectId, ref: "images" },
-  },
-  {
+}, {
     timestamps: true,
-  }
-);
+})
 
-export const RestaurantModel = mongoose.model("restaurants", RestaurantSchema);
+RestaurantSchema.methods.get_id = function () {
+    return this._id.toString();
+}
+
+export const RestaurantModel = mongoose.model("restaurants", RestaurantSchema)

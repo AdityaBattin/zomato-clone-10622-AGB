@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
-import getImage from "../../redux/reducers/image/image.action";
+import React, { useState,useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import {getImage} from '../../redux/reducers/image/image.action'
+import { useParams } from "react-router-dom";
 
 // components
 import MenuCollection from "./MenuCollection";
 
 const Menu = () => {
   const [menus, setMenus] = useState([]);
-
+  const reduxState = useSelector((globalState) => globalState.restaurant.selectedRestaurant.restaurants);
   const dispatch = useDispatch();
-
-  const reduxState = useSelector(
-    (globalState) => globalState.restaurant.selectedRestaurant.restaurant
-  );
-
   useEffect(() => {
     if (reduxState) {
       dispatch(getImage(reduxState?.menuImages)).then((data) => {
         const images = [];
         data.payload.images.map(({ location }) => images.push(location));
         setMenus(images);
+        // console.log(images);
       });
     }
+
   }, [reduxState]);
 
   return (

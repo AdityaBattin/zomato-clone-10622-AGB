@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AiOutlineCompass } from "react-icons/ai";
 import { BiTimeFive } from "react-icons/bi";
 
@@ -7,13 +7,15 @@ import FloatMenuBtn from "../OrderOnline/FloatMenuBtn";
 import FoodList from "../OrderOnline/FoodList";
 import MenuListContainer from "../OrderOnline/MenuListContainer";
 
-// redux
-import { useSelector, useDispatch } from "react-redux";
-import { getFoodList } from "../../redux/reducers/food/food.action";
+import { useSelector, useDispatch } from 'react-redux'
+import { getFood, getFoodList } from '../../redux/reducers/food/food.action'
+import { useEffect } from "react";
 
 const OrderOnline = () => {
   const [menu, setMenu] = useState([]);
   const [selected, setSelected] = useState("");
+
+
 
   const onClickHandler = (e) => {
     if (e.target.id) {
@@ -22,18 +24,17 @@ const OrderOnline = () => {
     return;
   };
 
+  const reduxState = useSelector((globalState) => globalState.restaurant.selectedRestaurant.restaurants);
   const dispatch = useDispatch();
-
-  const restaurant = useSelector(
-    (globaldata) => globaldata.restaurant.selectedRestaurant.restaurant
-  );
-
   useEffect(() => {
-    restaurant &&
-      dispatch(getFoodList(restaurant.menu)).then((data) => {
+    if (reduxState) {
+      dispatch(getFoodList(reduxState?.menu)).then((data) => {
+        // console.log(data);
         setMenu(data.payload.menus.menus);
       });
-  }, [restaurant]);
+    }
+
+  }, [reduxState]);
 
   return (
     <>
@@ -72,6 +73,8 @@ const OrderOnline = () => {
   );
 };
 export default OrderOnline;
+
+
 
 // {
 //   name: "Today's Special",

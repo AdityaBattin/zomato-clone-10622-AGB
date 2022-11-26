@@ -2,10 +2,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 
-// redux
-import { useDispatch } from "react-redux";
-import { signIn } from "../../redux/reducers/auth/auth.action";
-import { getMySelf } from "../../redux/reducers/user/user.action";
+import { useDispatch } from 'react-redux'
+import { signin } from "../../redux/reducers/auth/auth.action";
+import { selfuser } from "../../redux/reducers/user/user.action";
 
 const Signin = ({ isOpen, setIsOpen }) => {
   const [userData, setUserData] = useState({
@@ -24,14 +23,14 @@ const Signin = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
 
   const submit = async () => {
-    await dispatch(signIn(userData));
-    await dispatch(getMySelf());
+    dispatch(signin(userData))
+    dispatch(selfuser());
     closeModal();
     setUserData({ email: "", password: "" });
   };
 
   const googleSignIn = () =>
-    (window.location.href = `${process.env.REACT_APP_CLIENT_URL}auth/google`);
+    (window.location.href = "http://localhost:4000/auth/google");
 
   return (
     <>

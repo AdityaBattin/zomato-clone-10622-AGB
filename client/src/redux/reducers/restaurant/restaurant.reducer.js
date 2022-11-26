@@ -1,27 +1,28 @@
-import { GET_RESTAURANT, GET_SPECIFIC_RESTAURANT } from "./restaurant.type";
+import { GET_RESTAURANT, GET_SPECIFY_RESTAURANT } from "./restaurant.type";
 
-const initialState = {
-  restaurants: [],
-  selectedRestaurant: {},
-};
+const initialstate = {
+    restaurants: [],
+    selectedRestaurant: {},
+}
 
-const restaurantReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_RESTAURANT:
-      return {
-        ...state,
-        restaurants: [...action.payload],
-      };
-    case GET_SPECIFIC_RESTAURANT:
-      return {
-        ...state,
-        selectedRestaurant: { ...action.payload },
-      };
-    default:
-      return {
-        ...state,
-      };
-  }
-};
+const restaurantReducer = (state = initialstate, action) => {
+    switch (action.type) {
+        case GET_RESTAURANT:
+            return {
+                ...state,
+                restaurants: [...action.payload],
+            }
+        case GET_SPECIFY_RESTAURANT:
+            return {
+                ...state,
+                selectedRestaurant: { ...action.payload },
+            }
+        default:
+            return {
+                ...state,
+            }
+    }
+}
 
 export default restaurantReducer;
+

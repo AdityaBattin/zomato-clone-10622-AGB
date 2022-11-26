@@ -12,7 +12,7 @@ const DeliverySmCard = ({ image, title }) => {
           />
         </div>
         <div>
-          <h3 className="text-sm my-1 text-center font-light">{title}</h3>
+          <h3 className="my-1 text-center font-bold text-xl">{title}</h3>
         </div>
       </div>
     </>
@@ -31,7 +31,7 @@ const DeliveryLgCard = ({ image, title }) => {
           />
         </div>
         <div>
-          <h3 className="text-sm my-1 text-center font-light">{title}</h3>
+          <h3 className="text-xl my-1 text-center font-medium">{title}</h3>
         </div>
       </div>
     </>

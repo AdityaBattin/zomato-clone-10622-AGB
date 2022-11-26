@@ -1,36 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageViewer from "react-simple-image-viewer";
-
-// redux
-import { useDispatch, useSelector } from "react-redux";
-import getImage from "../../redux/reducers/image/image.action";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { getImage } from '../../redux/reducers/image/image.action'
 
 // components
 import PhotoCollection from "./PhotoCollection";
 
 const Photos = () => {
   const [photos, setPhotos] = useState([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(0);
-
-  const closeViewer = () => setIsMenuOpen(false);
-  const openViewer = () => setIsMenuOpen(true);
-
+  const reduxState = useSelector((globalState) => globalState.restaurant.selectedRestaurant.restaurants);
   const dispatch = useDispatch();
-
-  const reduxState = useSelector(
-    (globalState) => globalState.restaurant.selectedRestaurant.restaurant
-  );
-
   useEffect(() => {
     if (reduxState) {
       dispatch(getImage(reduxState?.photos)).then((data) => {
         const images = [];
         data.payload.images.map(({ location }) => images.push(location));
         setPhotos(images);
+        // console.log(images);
       });
     }
+
   }, [reduxState]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+
+  const closeViewer = () => setIsMenuOpen(false);
+  const openViewer = () => setIsMenuOpen(true);
 
   return (
     <>

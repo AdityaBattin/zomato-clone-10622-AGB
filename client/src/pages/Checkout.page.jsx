@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsShieldLockFill } from "react-icons/bs";
 
 // Layout
@@ -7,13 +7,18 @@ import CheckoutLayout from "../layouts/Checkout.layout";
 // components
 import FoodItem from "../components/Cart/FoodItem";
 import AddressList from "../components/Checkout/AddressList";
-
-// redux
 import { useSelector } from "react-redux";
+// import { useEffect } from "react";
 
 const Checkout = () => {
+  // const [cart, setCart] = useState([]);
   const cart = useSelector((globalState) => globalState.cart.cart);
+
   const user = useSelector((globalState) => globalState.user);
+
+  const restaurants = useSelector((globalState) => globalState.restaurant.selectedRestaurant.restaurants);
+
+  console.log(user);
 
   const address = [
     {
@@ -25,6 +30,11 @@ const Checkout = () => {
       address: "123 Main Street, CP",
     },
   ];
+
+  const selectedrestaurant = {
+    name: restaurants?.name,
+    address: restaurants?.address,
+  }
 
   const payNow = () => {
     let options = {
@@ -47,7 +57,7 @@ const Checkout = () => {
       },
     };
 
-    let razorpay = new window.Razorpay({ options });
+    let razorpay = new window.Razorpay(options);
     razorpay.open();
   };
 
@@ -59,8 +69,8 @@ const Checkout = () => {
         <div className="flex w-full flex-col gap-2 items-center">
           <h5 className="text-base tracking-wider">ORDER FROM</h5>
           <div className="flex w-full flex-col items-center text-gray-400">
-            <h4>Domino's Pizza</h4>
-            <small>GT World Mall, Magadi Road, NCR Noida</small>
+            <h4>{selectedrestaurant.name}</h4>
+            <small>{selectedrestaurant.address}</small>
           </div>
           <div className="my-4 h-32 overflow-y-scroll px-4 flex flex-col gap-2 w-full md:w-3/5">
             {cart.map((item) => (

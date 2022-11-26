@@ -1,66 +1,58 @@
-import express from "express";
-import dotenv from "dotenv";
-import passport from "passport";
-import session from "express-session";
-import cors from 'cors'
-import helmet from 'helmet'
+import express from 'express'
+import dotenv from 'dotenv'
+import passport from 'passport';
+import session from 'express-session'
+import cors from 'cors';
+import helmet from 'helmet';
 
-// Private route authorization config
-import privateRouteConfig from "./config/route.config";
-import googleAuthConfig from "./config/google.config";
+import privateConfig from './config/route.config';
+import googleAuthConfig from './config/google.config'
 
-// Database connection
-import ConnectDB from "./database/connection";
-
-import Auth from "./api/auth";
-import Food from "./api/food";
-import Restaurant from "./api/restaurant";
-import User from "./api/user";
-import Menu from "./api/menu";
-import Order from "./api/order";
-import Review from "./api/review";
-import Image from "./api/image";
+import ConnectDB from './database/connection.js'
+import Order from './api/order';
+import User from './api/user';
+import Review from './api/review'
+import Restaurant from './api/restaurant'
+import Menu from './api/menu'
+import Food from './api/food'
+import Auth from './api/auth'
+import Image from './api/image'
 
 dotenv.config();
+const port = 4000;
+const app = express();
 
-privateRouteConfig(passport);
+privateConfig(passport);
 googleAuthConfig(passport);
 
-const zomato = express();
+app.use(cors({ origin: "http://localhost:3000" }));
+app.use(helmet());
+app.use(express.json());
+app.use(session({ secret: process.env.SECRETORKEY }));
+app.use(passport.initialize());
+app.use(passport.session());
 
-// adding additional passport configuration
-zomato.use(cors({origin: "http://localhost:3000" }));
-zomato.use.apply(helmet());
-zomato.use(express.json());
-zomato.use(session({ secret: process.env.JWTSECRET }));
-zomato.use(passport.initialize());
-zomato.use(passport.session());
-
-zomato.get("/", (req, res) => {
-  res.json({
-    message: "Server is running",
-  });
+app.get('/', (req, res) => {
+    res.status(200).json({
+        message: "server is running !"
+    })
 });
 
-// /auth/signup
-zomato.use("/auth", Auth);
-zomato.use("/food", Food);
-zomato.use("/restaurant", Restaurant);
-zomato.use("/user", User);
-zomato.use("/menu", Menu);
-zomato.use("/order", Order);
-zomato.use("/review", Review);
-zomato.use("/image", Image);
+app.use('/user', User);
+app.use('/order', Order);
+app.use('/review', Review);
+app.use('/restaurant', Restaurant);
+app.use('/menu', Menu);
+app.use('/auth', Auth);
+app.use('/food', Food);
+app.use('/image', Image);
 
-const PORT = 4000;
-
-zomato.listen(PORT, () => {
-  ConnectDB()
-    .then(() => {
-      console.log("Server is running !!!");
-    })
-    .catch((error) => {
-      console.log("Server is running, but database connection failed...");
-      console.log(error);
+app.listen(port, () => {
+    ConnectDB().then(() => {
+        console.log('Server is Running !');
+    }).catch((err) => {
+        console.log('DataBase connection Failed !!');
+        console.log(err);
     });
 });
+
